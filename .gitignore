@@ -1,0 +1,10 @@
+.env
+*.pyc
+__pycache__/
+credentials/
+credentials.json
+*.egg-info/
+dist/
+.pytest_cache/
+venv/
+*.tar.gz
