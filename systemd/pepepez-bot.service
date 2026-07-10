@@ -1,0 +1,15 @@
+[Unit]
+Description=Bot Pepe Pez (Produccion)
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=presidencia
+WorkingDirectory=/home/presidencia/bot-produccion-ppez/pepepez_bot
+EnvironmentFile=/home/presidencia/bot-produccion-ppez/pepepez_bot/.env
+ExecStart=/home/presidencia/bot-produccion-ppez/venv/bin/python3 main.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
