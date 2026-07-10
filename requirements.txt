@@ -1,0 +1,11 @@
+python-telegram-bot==22.8
+python-dotenv==1.2.2
+APScheduler==3.11.3
+gspread==6.2.1
+google-auth==2.55.1
+psycopg2-binary==2.9.12
+pillow==12.3.0
+pytesseract==0.3.13
+httpx==0.28.1
+pytz==2026.2
+tzlocal==5.4.4
