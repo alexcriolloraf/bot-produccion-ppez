@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.insert(0, '/home/presidencia/bodega_bot')
+sys.path.insert(0, '/home/presidencia/bot-produccion-ppez/bodega_bot')
 
 from dotenv import load_dotenv
 load_dotenv()
