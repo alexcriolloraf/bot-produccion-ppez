@@ -74,6 +74,18 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     caption = update.message.caption
     file_id = update.message.photo[-1].file_id
 
+    from bot.reception_handler import start_reception
+    await start_reception(update, context, file_id, caption)
+
+async def handle_photo_legacy(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+    user = get_user(user_id)
+    if not user:
+        return
+
+    caption = update.message.caption
+    file_id = update.message.photo[-1].file_id
+
     if not caption:
         context.user_data['pending_file_id'] = file_id
         await update.message.reply_text(

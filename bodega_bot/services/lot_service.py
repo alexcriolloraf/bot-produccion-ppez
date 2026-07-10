@@ -5,20 +5,34 @@ import pytz
 ECUADOR_TZ = pytz.timezone("America/Guayaquil")
 
 def generate_lot_code(product_prefix: str) -> str:
-    """
-    Genera código de lote: PREFIX-DDMMYY-NN
-    Ejemplo: YUC-070726-01, COR-070726-02
-    """
     now = datetime.now(ECUADOR_TZ)
     date_part = now.strftime('%d%m%y')
-    
     with get_connection() as conn:
         with conn.cursor() as cur:
             cur.execute("""
-                SELECT COUNT(*) as cnt FROM lots 
-                WHERE product_prefix = %s 
+                SELECT COUNT(*) as cnt FROM lots
+                WHERE product_prefix = %s
                 AND lot_code LIKE %s
             """, (product_prefix, f"{product_prefix}-{date_part}-%"))
+            count = cur.fetchone()['cnt']
+            return f"{product_prefix}-{date_part}-{count + 1:02d}"
+
+def generate_reception_code() -> str:
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT nextval('receptions_seq')")
+            seq = cur.fetchone()['nextval']
+            return f"RCP-{seq:04d}"
+
+def generate_reception_lot_code(product_prefix: str) -> str:
+    now = datetime.now(ECUADOR_TZ)
+    date_part = now.strftime('%d%m%y')
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT COUNT(*) as cnt FROM reception_items
+                WHERE lot_code LIKE %s
+            """, (f"{product_prefix}-{date_part}-%",))
             count = cur.fetchone()['cnt']
             return f"{product_prefix}-{date_part}-{count + 1:02d}"
 

@@ -1,6 +1,7 @@
 from telegram import Update
 from telegram.ext import ContextTypes
 from database.connection import get_user, add_user, remove_user
+from bot.reception_handler import pendientes_command
 import os
 
 SUPERADMIN_ID = int(os.getenv("SUPERADMIN_ID", "216920595"))
@@ -13,11 +14,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         f"Bienvenido {user['name']}\n"
         f"Bot Bodega Pepe Pez activo.\n\n"
-        f"Envia foto + descripcion para registrar.\n"
-        f"Ejemplos:\n"
-        f"  Ingresa pollo Pronaca 45kg\n"
-        f"  Despacho aceite Mall del Sol 12lt\n"
-        f"  Inventario camaron 25kg"
+        f"Secretaria: envia foto de la factura para iniciar recepcion.\n"
+        f"Bodega: escribe el peso para registrar.\n\n"
+        f"Comandos:\n"
+        f"  /pendientes - Ver recepciones abiertas"
     )
 
 async def add_user_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
